@@ -222,7 +222,7 @@ RUN set -eux \
 # rebuilds. The resolve must NOT move torch/numpy/numba (asserted below).
 RUN ${VENV}/bin/uv pip install \
         --python ${VENV}/bin/python \
-        "jupyterlab==4.6.0" "notebook==7.6.0" "ipywidgets==8.1.8" "matplotlib==3.11.0" \
+        "jupyterlab==4.6.4" "notebook==7.6.3" "ipywidgets==8.1.8" "matplotlib==3.11.0" \
         "soundfile==0.14.0" "evaluate==0.4.6" "jiwer==4.0.0" "tensorboard==2.20.0" \
         "langid==1.1.6" "easydict==1.13" "protobuf==6.33.6" \
         "omegaconf==2.3.1" "einx==0.4.3" "librosa==0.11.0" "ftfy==6.3.1" \
@@ -425,8 +425,8 @@ ENV DEBIAN_FRONTEND=noninteractive \
 #   ffmpeg  torchcodec dlopens system FFmpeg libs (not bundled in the wheel)
 #   wget    notebooks fetch assets with `!wget URL`
 #   ninja-build  flashinfer cpp_ext JIT shells out to ninja
-#   cuda-nvcc + cudart-dev  flash-linear-attention TileLang JIT-compiles CUDA
-#                kernels via nvcc, absent from the -base image
+#   cuda-nvcc + cudart-dev  flashinfer JIT-compiles CUDA kernels via nvcc for
+#                ops with no cached cubin, absent from the -base image
 RUN CUDA_PKG="$(echo "${CUDA_VERSION}" | awk -F. '{print $1"-"$2}')" \
     && apt-get update && apt-get install -y --no-install-recommends \
         software-properties-common ca-certificates curl wget git libgomp1 \
